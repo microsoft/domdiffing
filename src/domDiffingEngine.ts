@@ -26,7 +26,7 @@ const compareDoms = (baselineDom: any, candidateDom: any) => {
   if((baselineDom[BTagName]["uniqueId"] == candidateDom[CTageName]["uniqueId"]) && !candidateDom[CTageName]["found"] && !baselineDom[BTagName]["found"]){
       baselineDom[BTagName]["found"] = true;
       candidateDom[CTageName]["found"] = true;
-      console.log(`baselineDom, candidateDom: ${JSON.stringify(baselineDom[BTagName]["uniqueId"])}, ${JSON.stringify(candidateDom[BTagName]["uniqueId"])}`)
+    //   console.log(`baselineDom, candidateDom: ${JSON.stringify(baselineDom[BTagName]["uniqueId"])}, ${JSON.stringify(candidateDom[BTagName]["uniqueId"])}`)
       const cssComparisonResult = compareNodeCSS(baselineDom[BTagName]["cssProps"], candidateDom[CTageName]["cssProps"]);
       candidateDom[CTageName]["cssComparisonResult"] = cssComparisonResult;
 
