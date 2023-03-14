@@ -13,7 +13,7 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
     let pageParsedDom = {}
     let totalDomElementParsed = 0;
 
-    const  iterateDomElements = (node: any, parent: string, id: number, parentId: number, _nthChild: number) => {
+    const  iterateDomElements = (node: any, parent: string, id: number, parentId: number, _nthChild: number, parentAppliedCss: any) => {
         ++totalDomElementParsed;
         node.visited = true;
         let name: string = node.tagName;
@@ -21,6 +21,14 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
 
         const coordinates = node.getBoundingClientRect();
         const attributes =  findElementAttributes(node);
+        const appliedCss = findAppliedCSSOnElement(node);
+        const cssProps = {};
+        // Prune the appliedCss following the cascade from the parentCssProps
+        for (const key in appliedCss) {
+            if (appliedCss[key] != parentAppliedCss[key]) {
+                cssProps[key] = appliedCss[key];
+            }
+        }
 
         domElement[name] = {
             coordinates: {
@@ -34,7 +42,7 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
             nthChild: _nthChild,
             cssComparisonResult: {},
             attributes,
-            cssProps: findAppliedCSSOnElement(node),
+            cssProps,
             path: (parentId == 0 ? "" : parent+">") + node.tagName + ":nth-child(" + _nthChild + ")",
             childNodes: [],
             found: false,
@@ -47,7 +55,7 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
             for(const childNode of node.childNodes){
                 const childTagName = childNode.tagName; 
                 if (childTagName && childTagName !== "SCRIPT" && childTagName !== "STYLE"){
-                    domElement[name]["childNodes"].push(iterateDomElements(childNode, domElement[name]["path"], id+1, id+1, ++nthChild));
+                    domElement[name]["childNodes"].push(iterateDomElements(childNode, domElement[name]["path"], id+1, id+1, ++nthChild, appliedCss));
                 }
             }
         }
@@ -90,7 +98,7 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
         return attrsValue;
     }
 
-    pageParsedDom = iterateDomElements(rootElement, "", 0, 0, 1);
+    pageParsedDom = iterateDomElements(rootElement, "", 0, 0, 1, {});
     
     return [
         pageParsedDom,
