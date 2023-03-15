@@ -76,9 +76,10 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
     const findAppliedCSSOnElement = (node: any) =>{
         const appliedCSS = window.getComputedStyle(node);
         const style = {};
+        // Clean url(data:...) properties to avoid long base64 URLs and keep a single digit in px values
         for(let i=0; i<appliedCSS.length; i++){
             var propName = appliedCSS.item(i);
-            style[propName] = appliedCSS.getPropertyValue(propName);
+            style[propName] = appliedCSS.getPropertyValue(propName).replace(/url\(data:[^)]+\)/g, "url(data:...)").replace(/(\d+\.\d)\d+px/g, "$1px");
         }
         
         return style;
