@@ -2,6 +2,8 @@ const fs = require("fs");
 
 
 export const runDomDiffing = (baselineDom: any, candidateDom: any) => {
+  expandComputedStyle(baselineDom, {});
+  expandComputedStyle(candidateDom, {});
   compareDoms(baselineDom, candidateDom);
 
   let baselineResult = [];
@@ -17,6 +19,21 @@ export const runDomDiffing = (baselineDom: any, candidateDom: any) => {
       "baseline": baselineResult,
       "candidate": candidateResult
   };
+}
+
+const expandComputedStyle = (dom: any, parentCssProps: any) => {
+  const tagName = Object.keys(dom)[0];
+  const cssProps = dom[tagName]["cssProps"];
+  for (const name of parentCssProps) {
+    if (cssProps[name] == undefined) {
+        cssProps[name] = parentCssProps[name];
+      }
+  }
+
+  // expandComputedStyle of the childNodes
+  for(let i=0; i<dom[tagName]["childNodes"].length; i++){
+    expandComputedStyle(dom[tagName]["childNodes"], cssProps);
+  }
 }
 
 const compareDoms = (baselineDom: any, candidateDom: any) => {
