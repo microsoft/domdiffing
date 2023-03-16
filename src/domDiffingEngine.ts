@@ -31,8 +31,9 @@ const expandComputedStyle = (dom: any, parentCssProps: any) => {
   }
 
   // expandComputedStyle of the childNodes
-  for(let i=0; i<dom[tagName]["childNodes"].length; i++){
-    expandComputedStyle(dom[tagName]["childNodes"], cssProps);
+  const childNodes = dom[tagName]["childNodes"];
+  for (let i = 0; i < childNodes?.length; i++) {
+    expandComputedStyle(childNodes[i], cssProps);
   }
 }
 
