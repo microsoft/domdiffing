@@ -24,7 +24,7 @@ export const runDomDiffing = (baselineDom: any, candidateDom: any) => {
 const expandComputedStyle = (dom: any, parentCssProps: any) => {
   const tagName = Object.keys(dom)[0];
   const cssProps = dom[tagName]["cssProps"];
-  for (const name of parentCssProps) {
+  for (const name in parentCssProps) {
     if (cssProps[name] == undefined) {
         cssProps[name] = parentCssProps[name];
       }
