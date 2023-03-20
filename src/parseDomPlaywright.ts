@@ -51,7 +51,7 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
         };
     
         let nthChild = 0;
-        if(node.hasChildNodes()){
+        if(node.hasChildNodes() && name != "svg"){
             for(const childNode of node.childNodes){
                 const childTagName = childNode.tagName; 
                 if (childTagName && childTagName !== "SCRIPT" && childTagName !== "STYLE"){
