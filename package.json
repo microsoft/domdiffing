@@ -1,6 +1,6 @@
 {
   "name": "domdiffing",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Dom Diffing finds dom differences between two doms",
   "main": "lib/index.js",
   "module": "lib/index.js",
