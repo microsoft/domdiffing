@@ -109,17 +109,17 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
 }
 
 export const parseWebPage = async (page: Page, filename: string, selector?: any, shouldCompress: boolean=false) => {
-    console.log(`\n\n********  PARSING DOM  ********`);
+    // console.log(`\n\n********  PARSING DOM  ********`);
     const result = await page.evaluate(parseHTMLAndKeepRelations, selector);
-    console.log(`filename, selector: ${filename}, ${selector}`);
+    // console.log(`filename, selector: ${filename}, ${selector}`);
 
     let compressedResult = {};
 
     if(shouldCompress){
-        console.log("Compressing DOM");
+        // console.log("Compressing DOM");
         compressedResult = compress(result[0]);
     }else {
-        console.log("Not compressing DOM");
+        // console.log("Not compressing DOM");
         compressedResult = result[0];
     }
     
