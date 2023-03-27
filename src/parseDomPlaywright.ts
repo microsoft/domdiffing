@@ -51,7 +51,8 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
         };
     
         let nthChild = 0;
-        if(node.hasChildNodes() && name != "svg"){
+        const isVisible = appliedCss["visibility"] != "hidden" && appliedCss["display"] != "none" && appliedCss["opacity"] != "0";
+        if(node.hasChildNodes() && name != "svg" && isVisible){
             for(const childNode of node.childNodes){
                 const childTagName = childNode.tagName; 
                 if (childTagName && childTagName !== "SCRIPT" && childTagName !== "STYLE"){
@@ -109,17 +110,13 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
 }
 
 export const parseWebPage = async (page: Page, filename: string, selector?: any, shouldCompress: boolean=false) => {
-    // console.log(`\n\n********  PARSING DOM  ********`);
     const result = await page.evaluate(parseHTMLAndKeepRelations, selector);
-    // console.log(`filename, selector: ${filename}, ${selector}`);
 
     let compressedResult = {};
 
     if(shouldCompress){
-        // console.log("Compressing DOM");
         compressedResult = compress(result[0]);
     }else {
-        // console.log("Not compressing DOM");
         compressedResult = result[0];
     }
     
