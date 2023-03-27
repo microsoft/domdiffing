@@ -51,7 +51,7 @@ const parseHTMLAndKeepRelations = (selector: string = "html") => {
         };
     
         let nthChild = 0;
-        const isVisible = appliedCss?.visibility != "hidden" && appliedCss?.display != "none" && appliedCss?.opacity != "0";
+        const isVisible = appliedCss["visibility"] != "hidden" && appliedCss["display"] != "none" && appliedCss["opacity"] != "0";
         if(node.hasChildNodes() && name != "svg" && isVisible){
             for(const childNode of node.childNodes){
                 const childTagName = childNode.tagName; 
