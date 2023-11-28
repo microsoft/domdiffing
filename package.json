@@ -1,6 +1,6 @@
 {
   "name": "domdiffing",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Dom Diffing finds dom differences between two doms",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "playwright": "^1.34.3",
+    "playwright": "^1.40.0",
     "compress-json": "^2.1.1"
   },
   "peerDependencies": {},
